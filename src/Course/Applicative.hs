@@ -193,7 +193,7 @@ lift3 ::
   -> f b
   -> f c
   -> f d
-lift3 = (((<*>) .) .) . lift2
+lift3 f fa fb fc = lift2 f fa fb <*> fc
 
 -- | Apply a quaternary function in the environment.
 --
@@ -225,7 +225,7 @@ lift4 ::
   -> f c
   -> f d
   -> f e
-lift4 = ((((<*>) .) .) .) . lift3
+lift4 f fa fb fc fd = lift3 f fa fb fc <*> fd
 
 -- | Apply, discarding the value of the first argument.
 -- Pronounced, right apply.
@@ -297,7 +297,8 @@ sequence ::
   Applicative f =>
   List (f a)
   -> f (List a)
-sequence = error "todo: Course.Applicative#replicateA"
+sequence =
+  foldRight (lift2 (:.)) (pure Nil)
 
 -- | Replicate an effect a given number of times.
 --
@@ -320,8 +321,8 @@ replicateA ::
   Int
   -> f a
   -> f (List a)
-replicateA =
-  error "todo: Course.Applicative#replicateA"
+replicateA n =
+  sequence . replicate n
 
 -- | Filter a list with a predicate that produces an effect.
 --
@@ -348,8 +349,8 @@ filtering ::
   (a -> f Bool)
   -> List a
   -> f (List a)
-filtering =
-  error "todo: Course.Applicative#filtering"
+filtering p =
+  foldRight (\a -> lift2 (\b -> if b then (a:.) else id) (p a)) (pure Nil)
 
 -----------------------
 -- SUPPORT LIBRARIES --
