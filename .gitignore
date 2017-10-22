@@ -36,3 +36,6 @@ TAGS
 # Vagrant
 .vagrant
 ops/*.retry
+
+# Store
+.DS_Store
