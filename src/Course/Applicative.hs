@@ -162,7 +162,7 @@ lift2 ::
   -> f a
   -> f b
   -> f c
-lift2 f fa fb = f <$> fa <*> fb
+lift2 f fa fb = f <$$> fa <*> fb
 
 -- | Apply a ternary function in the environment.
 --
@@ -275,8 +275,7 @@ lift4 = ((((<*>) .) .) .) . lift3
   f b
   -> f a
   -> f b
-(<*) =
-  error "todo: Course.Applicative#(<*)"
+(<*) = lift2 (flip $ const id)
 
 -- | Sequences a list of structures to a structure of list.
 --
@@ -298,8 +297,7 @@ sequence ::
   Applicative f =>
   List (f a)
   -> f (List a)
-sequence =
-  error "todo: Course.Applicative#sequence"
+sequence = error "todo: Course.Applicative#replicateA"
 
 -- | Replicate an effect a given number of times.
 --
