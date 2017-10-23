@@ -141,8 +141,8 @@ join = (id =<<)
   f a
   -> (a -> f b)
   -> f b
-(>>=) =
-  error "todo: Course.Monad#(>>=)"
+fa >>= k = join $ k <$> fa
+-- (>>=) = (join .) . flip (<$>)
 
 infixl 1 >>=
 
@@ -157,8 +157,7 @@ infixl 1 >>=
   -> (a -> f b)
   -> a
   -> f c
-(<=<) =
-  error "todo: Course.Monad#(<=<)"
+(<=<) k k' a = pure a >>= k' >>=  k
 
 infixr 1 <=<
 
