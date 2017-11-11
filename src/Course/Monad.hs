@@ -106,9 +106,9 @@ instance Monad Optional where
 -- 119
 instance Monad ((->) t) where
   (=<<) ::
-    (a -> ((->) t b))
-    -> ((->) t a)
-    -> ((->) t b)
+    (a -> (->) t b)
+    -> (->) t a
+    -> (->) t b
   k =<< f = \t -> k (f t) t
 
 -- | Flattens a combined structure to a single structure.
