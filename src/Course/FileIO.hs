@@ -125,4 +125,4 @@ printFile ::
   -> IO ()
 printFile file contents =
   putStrLn (file ++ " -- ") *>
-  putStrLn content
+  putStrLn contents
