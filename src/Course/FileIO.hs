@@ -123,4 +123,6 @@ printFile ::
   FilePath
   -> Chars
   -> IO ()
-printFile = const putStrLn
+printFile file contents =
+  putStrLn (file ++ " -- ") *>
+  putStrLn content
